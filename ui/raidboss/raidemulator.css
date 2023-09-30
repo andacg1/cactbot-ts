@@ -297,18 +297,36 @@ div.row.progress-bar-row .player-triggers .trigger-bar.dps .trigger-item {
   pointer-events: all;
 }
 
-.popup-text-container {
-  height: 2rem;
+.popup-text-container, .popup-image-container {
   line-height: 2rem;
   border: 1px solid black;
   margin: 0.5rem;
-  padding-left: 0.5rem;
   position: relative;
-  padding-right: 3rem;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.popup-text-container {
+  height: 2rem;
+  padding-right: 3rem;
+  padding-left: 0.5rem;
+}
+
+.popup-image-container {
+  padding: 2em;
+}
+
+.popup-image {
+  width: 100%;
+  height: auto;
+}
+
+.popup-text-remaining {
+  position: absolute;
+  right: 0.5rem;
+  top: 0;
 }
 
 .popup-text-container .popup-text-remaining {

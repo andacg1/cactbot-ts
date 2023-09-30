@@ -52,6 +52,7 @@ module.exports = {
       'alarmText',
       'alertText',
       'infoText',
+      'imageText',
       'tts',
       'run',
       'outputStrings',

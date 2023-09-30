@@ -348,6 +348,7 @@ const testTriggerFile = (file: string, info: TriggerSetInfo) => {
       'alarmText',
       'alertText',
       'infoText',
+      'imageText',
       'tts',
     ];
 
@@ -397,6 +398,7 @@ const testTriggerFile = (file: string, info: TriggerSetInfo) => {
       'alarmText',
       'alertText',
       'infoText',
+      'imageText',
       'tts',
       'run',
       'outputStrings',

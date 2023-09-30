@@ -294,6 +294,16 @@ export default class PopupTextAnalysis extends StubbedPopupText {
     return document.createElement('div');
   }
 
+  override _makeImageElement(
+    triggerHelper: EmulatorTriggerHelper,
+    text: string,
+    _className: string,
+  ): HTMLElement {
+    if (triggerHelper.resolver)
+      triggerHelper.resolver.status.result ??= text;
+    return document.createElement('div');
+  }
+
   override _createTextFor(
     triggerHelper: EmulatorTriggerHelper,
     text: string,
@@ -308,6 +318,16 @@ export default class PopupTextAnalysis extends StubbedPopupText {
     }
   }
 
+  override _createImageFor(
+    triggerHelper: TriggerHelper,
+    text: string,
+    textType: Text & 'image',
+    lowerTextKey: TextText & 'imageText',
+    duration: number,
+  ): void {
+    this._createTextFor(triggerHelper, text, textType, lowerTextKey, duration);
+  }
+
   override _playAudioFile(
     triggerHelper: EmulatorTriggerHelper,
     url: string,
@@ -319,8 +339,15 @@ export default class PopupTextAnalysis extends StubbedPopupText {
       // If we already have text and this is a default alert sound, don't override that info
       if (triggerHelper.resolver.status.responseType !== undefined) {
         if (
-          ['info', 'alert', 'alarm'].includes(triggerHelper.resolver.status.responseType) &&
-          [this.options.InfoSound, this.options.AlertSound, this.options.AlarmSound].includes(url)
+          ['info', 'alert', 'alarm', 'image'].includes(
+            triggerHelper.resolver.status.responseType,
+          ) &&
+          [
+            this.options.InfoSound,
+            this.options.AlertSound,
+            this.options.AlarmSound,
+            this.options.ImageSound,
+          ].includes(url)
         )
           return;
       }

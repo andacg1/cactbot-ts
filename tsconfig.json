@@ -23,7 +23,8 @@
     "declaration": false,
     "declarationMap": false,
     "types": [
-      "node"
+      "node",
+      "mocha"
     ],
     "moduleResolution": "node",
     "skipLibCheck": false,

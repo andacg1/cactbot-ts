@@ -31,6 +31,7 @@ export default class RaidEmulatorPopupText extends StubbedPopupText {
   scheduledTriggers: ScheduledTrigger[];
   seeking: boolean;
   $textElementTemplate: HTMLElement;
+  $imageElementTemplate: HTMLElement;
   audioDebugTextDuration: number;
 
   constructor(
@@ -51,16 +52,24 @@ export default class RaidEmulatorPopupText extends StubbedPopupText {
 
     this.seeking = false;
 
-    const templateElement = document.querySelector('template.textElement');
-    if (!(templateElement instanceof HTMLTemplateElement))
+    const textTemplateElement = document.querySelector('template.textElement');
+    if (!(textTemplateElement instanceof HTMLTemplateElement))
       throw new UnreachableCode();
 
-    const textElement = templateElement.content.firstElementChild;
+    const imageTemplateElement = document.querySelector('template.imageElement');
+    if (!(imageTemplateElement instanceof HTMLTemplateElement))
+      throw new UnreachableCode();
 
+    const textElement = textTemplateElement.content.firstElementChild;
     if (!(textElement instanceof HTMLElement))
       throw new UnreachableCode();
 
+    const imageElement = imageTemplateElement.content.firstElementChild;
+    if (!(imageElement instanceof HTMLElement))
+      throw new UnreachableCode();
+
     this.$textElementTemplate = textElement;
+    this.$imageElementTemplate = imageElement;
 
     this.audioDebugTextDuration = 2000;
 
@@ -197,6 +206,18 @@ export default class RaidEmulatorPopupText extends StubbedPopupText {
     this.addDisplayText(e, this.emulatedOffset + duration * 1000);
   }
 
+  override _createImageFor(
+    triggerHelper: TriggerHelper,
+    text: string,
+    textType: 'image',
+    lowerTextKey: TextText,
+    duration: number,
+  ): void {
+    const textElementClass = `${textType}-text`;
+    const e = this._makeImageElement(triggerHelper, text, textElementClass);
+    this.addDisplayText(e, this.emulatedOffset + duration * 1000);
+  }
+
   override _onTriggerInternalDelaySeconds(triggerHelper: TriggerHelper): Promise<void> | undefined {
     const delay = 'delaySeconds' in triggerHelper.trigger
       ? triggerHelper.valueOrFunction(triggerHelper.trigger.delaySeconds)
@@ -222,7 +243,12 @@ export default class RaidEmulatorPopupText extends StubbedPopupText {
 
   override _playAudioFile(triggerHelper: TriggerHelper, url: string, volume?: number): void {
     if (
-      ![this.options.InfoSound, this.options.AlertSound, this.options.AlarmSound]
+      ![
+        this.options.InfoSound,
+        this.options.AlertSound,
+        this.options.AlarmSound,
+        this.options.ImageSound,
+      ]
         .includes(url)
     ) {
       const div = this._makeTextElement(triggerHelper, url, 'audio-file');
@@ -247,6 +273,25 @@ export default class RaidEmulatorPopupText extends StubbedPopupText {
     if (!(container instanceof HTMLElement))
       throw new UnreachableCode();
     container.textContent = text;
+    return $ret;
+  }
+
+  override _makeImageElement(
+    _triggerHelper: TriggerHelper | undefined,
+    text: string,
+    className: string,
+  ): HTMLElement {
+    const $ret = this.$imageElementTemplate.cloneNode(true);
+    if (!($ret instanceof HTMLElement))
+      throw new UnreachableCode();
+    $ret.classList.add(className);
+    const img = $ret.querySelector('.popup-image');
+    if (!(img instanceof HTMLImageElement))
+      throw new UnreachableCode();
+
+    img.src = text;
+    img.alt = text;
+
     return $ret;
   }
 

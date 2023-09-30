@@ -1507,6 +1507,12 @@ const triggerSet: TriggerSet<Data> = {
           return;
         return output[engraveLabel]!();
       },
+      imageText: (_data, matches, output) => {
+        const engraveLabel = engravementLabelMap[matches.effectId];
+        if (engraveLabel === undefined)
+          return;
+        return '/resources/images/diagram/alarm-clock.svg';
+      },
       outputStrings: {
         crossMarked: {
           en: '\'+\' AoE on You',

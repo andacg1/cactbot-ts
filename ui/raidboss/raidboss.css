@@ -60,6 +60,13 @@
   top: 0;
 }
 
+/* Relative to popup-text-container */
+#popup-text-image {
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+
 .info-text {
   color: #2b2;
   font-size: 140%;
@@ -77,6 +84,13 @@
 .alarm-text {
   color: #f30;
   font-size: 230%;
+  text-shadow: -2px 0 4px black, 0 2px 4px black, 2px 0 4px black, 0 -2px 4px black;
+  will-change: transform;
+}
+
+.image-text {
+  color: #22a9bb;
+  font-size: 140%;
   text-shadow: -2px 0 4px black, 0 2px 4px black, 2px 0 4px black, 0 -2px 4px black;
   will-change: transform;
 }

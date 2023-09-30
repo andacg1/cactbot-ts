@@ -38,9 +38,9 @@ type TargetedResponseFunc = ResponseFunc<Data, TargetedMatches>;
 type TargetedFunc = TriggerFunc<Data, TargetedMatches, TriggerOutput<Data, TargetedMatches>>;
 type StaticResponseFunc = ResponseFunc<Data, Matches>;
 
-export const severityList = ['info', 'alert', 'alarm'] as const;
+export const severityList = ['info', 'alert', 'alarm', 'image'] as const;
 export type Severity = typeof severityList[number];
-export type SevText = 'infoText' | 'alertText' | 'alarmText';
+export type SevText = `${Severity}Text`;
 
 export const builtInResponseStr = 'cactbot-builtin-response';
 
@@ -55,6 +55,7 @@ export const triggerFunctions: (keyof LooseTrigger)[] = [
   'id',
   'type',
   'infoText',
+  'imageText',
   'preRun',
   'promise',
   'response',
@@ -71,6 +72,7 @@ export const triggerTextOutputFunctions: (keyof LooseTrigger)[] = [
   'alarmText',
   'alertText',
   'infoText',
+  'imageText',
   'response',
   'tts',
 ];
@@ -85,6 +87,7 @@ export const severityMap: { [sev in Severity]: SevText } = {
   'info': 'infoText',
   'alert': 'alertText',
   'alarm': 'alarmText',
+  'image': 'imageText',
 };
 
 const getText = (sev: Severity): SevText => {
@@ -108,6 +111,12 @@ const defaultAlertText = (sev?: Severity): SevText => {
 const defaultAlarmText = (sev?: Severity): SevText => {
   if (!sev)
     return 'alarmText';
+  return getText(sev);
+};
+
+export const defaultImageText = (sev?: Severity): SevText => {
+  if (!sev)
+    return 'imageText';
   return getText(sev);
 };
 

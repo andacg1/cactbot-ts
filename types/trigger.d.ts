@@ -75,6 +75,7 @@ export type ResponseOutput<Data extends RaidbossData, MatchType extends NetAnyMa
   infoText?: TriggerField<Data, MatchType, TriggerOutput<Data, MatchType>>;
   alertText?: TriggerField<Data, MatchType, TriggerOutput<Data, MatchType>>;
   alarmText?: TriggerField<Data, MatchType, TriggerOutput<Data, MatchType>>;
+  imageText?: TriggerField<Data, MatchType, TriggerOutput<Data, MatchType>>;
   tts?: TriggerField<Data, MatchType, PartialTriggerOutput<Data, MatchType>>;
 } | undefined;
 // The type of a response trigger field.
@@ -143,6 +144,7 @@ type BaseNetTrigger<Data extends RaidbossData, Type extends TriggerTypes> = {
   alarmText?: TriggerField<Data, NetMatches[Type], TriggerOutput<Data, NetMatches[Type]>>;
   alertText?: TriggerField<Data, NetMatches[Type], TriggerOutput<Data, NetMatches[Type]>>;
   infoText?: TriggerField<Data, NetMatches[Type], TriggerOutput<Data, NetMatches[Type]>>;
+  imageText?: TriggerField<Data, NetMatches[Type], TriggerOutput<Data, NetMatches[Type]>>;
   tts?: TriggerField<Data, NetMatches[Type], PartialTriggerOutput<Data, NetMatches[Type]>>;
   run?: TriggerField<Data, NetMatches[Type], void>;
   outputStrings?: OutputStrings;

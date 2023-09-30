@@ -25,6 +25,7 @@ export type PerTriggerOption = Partial<{
   InfoText: TriggerOutput<RaidbossData, Matches>;
   AlertText: TriggerOutput<RaidbossData, Matches>;
   AlarmText: TriggerOutput<RaidbossData, Matches>;
+  ImageText: TriggerOutput<RaidbossData, Matches>;
   TTSText: TriggerOutput<RaidbossData, Matches>;
 }>;
 
@@ -44,6 +45,7 @@ export type TriggerSetConfig = { [triggerSetId: string]: { [key: string]: Config
 type RaidbossNonConfigOptions = {
   PlayerNicks: { [gameName: string]: string };
   InfoSound: string;
+  ImageSound: string;
   AlertSound: string;
   AlarmSound: string;
   LongSound: string;
@@ -67,6 +69,7 @@ const defaultRaidbossNonConfigOptions: RaidbossNonConfigOptions = {
   PlayerNicks: {},
 
   InfoSound: '../../resources/sounds/freesound/percussion_hit.webm',
+  ImageSound: '../../resources/sounds/freesound/percussion_hit.webm',
   AlertSound: '../../resources/sounds/BigWigs/Alert.webm',
   AlarmSound: '../../resources/sounds/BigWigs/Alarm.webm',
   LongSound: '../../resources/sounds/BigWigs/Long.webm',
@@ -104,15 +107,20 @@ const defaultRaidbossConfigOptions = {
   DisplayAlarmTextForSeconds: 3,
   DisplayAlertTextForSeconds: 3,
   DisplayInfoTextForSeconds: 3,
+  DisplayImageTextForSeconds: 3,
   AlarmSoundVolume: 1,
   AlertSoundVolume: 1,
   InfoSoundVolume: 1,
+  ImageSoundVolume: 1,
   LongSoundVolume: 1,
   PullSoundVolume: 1,
   RumbleEnabled: false,
   InfoRumbleDuration: 400,
   InfoRumbleWeak: 0.5,
   InfoRumbleStrong: 0,
+  ImageRumbleDuration: 400,
+  ImageRumbleWeak: 0.5,
+  ImageRumbleStrong: 0,
   AlertRumbleDuration: 500,
   AlertRumbleWeak: 0,
   AlertRumbleStrong: 0.5,

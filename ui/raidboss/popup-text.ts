@@ -161,14 +161,14 @@ const onTriggerException = (trigger: ProcessedTrigger, e: unknown) => {
   }
 };
 
-const sounds = ['Alarm', 'Alert', 'Info', 'Long', 'Pull'] as const;
+const sounds = ['Alarm', 'Alert', 'Info', 'Long', 'Pull', 'Image'] as const;
 const soundStrs: readonly string[] = sounds;
 
 type Sound = typeof sounds[number];
 type SoundType = `${Sound}Sound`;
 type SoundTypeVolume = `${SoundType}Volume`;
 
-const texts = ['info', 'alert', 'alarm'] as const;
+const texts = ['info', 'alert', 'alarm', 'image'] as const;
 
 export type Text = typeof texts[number];
 type TextUpper = `${Capitalize<Text>}`;
@@ -214,6 +214,15 @@ const textMap: TextMap = {
     rumbleDuration: 'AlarmRumbleDuration',
     rumbleWeak: 'AlarmRumbleWeak',
     rumbleStrong: 'AlarmRumbleStrong',
+  },
+  image: {
+    text: 'imageText',
+    upperText: 'ImageText',
+    upperSound: 'ImageSound',
+    upperSoundVolume: 'ImageSoundVolume',
+    rumbleDuration: 'ImageRumbleDuration',
+    rumbleWeak: 'ImageRumbleWeak',
+    rumbleStrong: 'ImageRumbleStrong',
   },
 };
 
@@ -444,6 +453,7 @@ export interface TriggerHelper {
     alarmText: number;
     alertText: number;
     infoText: number;
+    imageText: number;
   };
   ttsText?: string;
   rumbleDurationMs?: number;
@@ -478,6 +488,7 @@ export class PopupText {
   protected infoText: HTMLElement | null;
   protected alertText: HTMLElement | null;
   protected alarmText: HTMLElement | null;
+  protected imageText: HTMLElement | null;
   protected parserLang: Lang;
   protected displayLang: Lang;
   protected ttsEngine?: BrowserTTSEngine;
@@ -510,6 +521,7 @@ export class PopupText {
     this.infoText = document.getElementById('popup-text-info');
     this.alertText = document.getElementById('popup-text-alert');
     this.alarmText = document.getElementById('popup-text-alarm');
+    this.imageText = document.getElementById('popup-text-image');
 
     this.parserLang = this.options.ParserLanguage ?? 'en';
     this.displayLang = this.options.AlertsLanguage ?? this.options.DisplayLanguage ??
@@ -1076,6 +1088,7 @@ export class PopupText {
         this._onTriggerInternalAlarmText(triggerHelper);
         this._onTriggerInternalAlertText(triggerHelper);
         this._onTriggerInternalInfoText(triggerHelper);
+        this._onTriggerInternalImageText(triggerHelper);
 
         // Rumble isn't a trigger function, so only needs to be ordered
         // after alarm/alert/info.
@@ -1289,6 +1302,7 @@ export class PopupText {
       alarmText: this.options.DisplayAlarmTextForSeconds,
       alertText: this.options.DisplayAlertTextForSeconds,
       infoText: this.options.DisplayInfoTextForSeconds,
+      imageText: this.options.DisplayImageTextForSeconds,
     };
   }
 
@@ -1363,6 +1377,10 @@ export class PopupText {
 
   _onTriggerInternalInfoText(triggerHelper: TriggerHelper): void {
     this._addTextFor('info', triggerHelper);
+  }
+
+  _onTriggerInternalImageText(triggerHelper: TriggerHelper): void {
+    this._addTextFor('image', triggerHelper);
   }
 
   _onTriggerInternalRumble(triggerHelper: TriggerHelper): void {
@@ -1515,6 +1533,32 @@ export class PopupText {
     }, duration * 1000);
   }
 
+  _createImageFor(
+    triggerHelper: TriggerHelper,
+    text: string,
+    textType: Text & 'image',
+    lowerTextKey: TextText & 'imageText',
+    duration: number,
+  ): void {
+    // info-text
+    const textElementClass = `${textType}-text`;
+
+    const holder = this[lowerTextKey]?.getElementsByClassName('holder')[0];
+    const div = this._makeImageElement(triggerHelper, text, textElementClass);
+
+    if (!holder)
+      throw new UnreachableCode();
+
+    holder.appendChild(div);
+    if (holder.children.length > this.kMaxRowsOfText)
+      holder.firstChild?.remove();
+
+    window.setTimeout(() => {
+      if (holder.contains(div))
+        holder.removeChild(div);
+    }, duration * 1000);
+  }
+
   _addTextFor(textType: Text, triggerHelper: TriggerHelper): void {
     // infoText
     const lowerTextKey = textMap[textType].text;
@@ -1553,7 +1597,12 @@ export class PopupText {
       if (duration === undefined)
         duration = 0;
 
-      this._createTextFor(triggerHelper, text, textType, lowerTextKey, duration);
+      if (textType === 'image' && lowerTextKey === 'imageText') {
+        this._createImageFor(triggerHelper, text, textType, lowerTextKey, duration);
+      } else {
+        this._createTextFor(triggerHelper, text, textType, lowerTextKey, duration);
+      }
+
       if (triggerHelper.soundUrl === undefined) {
         triggerHelper.soundUrl = this.options[upperSound];
         triggerHelper.soundVol = this.options[upperSoundVolume];
@@ -1571,6 +1620,21 @@ export class PopupText {
     div.classList.add(className);
     div.classList.add('animate-text');
     div.innerText = text;
+    return div;
+  }
+
+  _makeImageElement(_triggerHelper: TriggerHelper, text: string, className: string): HTMLElement {
+    const div = document.createElement('div');
+    div.classList.add(className);
+    div.classList.add('animate-image');
+
+    // TODO: Verify src
+    const img = document.createElement('img');
+    img.src = text;
+    img.alt = text;
+
+    div.appendChild(img);
+
     return div;
   }
 
