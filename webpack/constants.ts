@@ -102,6 +102,12 @@ export const cactbotHtmlChunksMap = {
       cactbotModules.raidboss,
     ],
   },
+  'ui/raidboss/raidboss_images_only.html': {
+    chunks: [
+      cactbotChunks.raidbossData,
+      cactbotModules.raidboss,
+    ],
+  },
   'ui/raidboss/raidboss_silent.html': {
     chunks: [
       cactbotChunks.raidbossData,

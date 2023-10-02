@@ -210,6 +210,9 @@
   <data name="PresetRaidbossCombined" xml:space="preserve">
     <value>Raidboss (时间轴+触发器)</value>
   </data>
+    <data name="PresetRaidbossImageOnly" xml:space="preserve">
+    <value>Raidboss 图片</value>
+  </data>
   <data name="PresetRaidbossTimelineOnly" xml:space="preserve">
     <value>Raidboss 时间轴</value>
   </data>

@@ -521,7 +521,7 @@ export class PopupText {
     this.infoText = document.getElementById('popup-text-info');
     this.alertText = document.getElementById('popup-text-alert');
     this.alarmText = document.getElementById('popup-text-alarm');
-    this.imageText = document.getElementById('popup-text-image');
+    this.imageText = document.getElementById('popup-image-container');
 
     this.parserLang = this.options.ParserLanguage ?? 'en';
     this.displayLang = this.options.AlertsLanguage ?? this.options.DisplayLanguage ??
@@ -1540,7 +1540,6 @@ export class PopupText {
     lowerTextKey: TextText & 'imageText',
     duration: number,
   ): void {
-    // info-text
     const textElementClass = `${textType}-text`;
 
     const holder = this[lowerTextKey]?.getElementsByClassName('holder')[0];
@@ -1632,6 +1631,7 @@ export class PopupText {
     const img = document.createElement('img');
     img.src = text;
     img.alt = text;
+    img.className = 'popup-image';
 
     div.appendChild(img);
 
@@ -1726,6 +1726,16 @@ export class PopupTextGenerator {
       {
         alarmText: text,
         tts: text,
+      },
+      null,
+      currentTime,
+    );
+  }
+
+  Image(text: string, currentTime: number): void {
+    this.popupText.OnTrigger(
+      {
+        imageText: text,
       },
       null,
       currentTime,

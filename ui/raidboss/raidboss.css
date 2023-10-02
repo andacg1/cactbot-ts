@@ -25,6 +25,10 @@
   display: none;
 }
 
+.hide-images #popup-image-container {
+    display: none;
+}
+
 #timeline-container:lang(fr) {
   width: 300px;
 }
@@ -61,10 +65,25 @@
 }
 
 /* Relative to popup-text-container */
-#popup-text-image {
-  position: absolute;
-  width: 100%;
-  top: 0;
+#popup-image-container {
+  /*width: 300px;*/
+  /*height: 300px;*/
+  /*max-width: 300px;*/
+  /*max-height: 300px;*/
+}
+
+#popup-image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.popup-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
 }
 
 .info-text {
@@ -93,12 +112,16 @@
   font-size: 140%;
   text-shadow: -2px 0 4px black, 0 2px 4px black, 2px 0 4px black, 0 -2px 4px black;
   will-change: transform;
+  height: 100%;
+  width: 100%;
 }
 
 .animate-text {
   animation-name: zoom-in-out;
   animation-duration: 300ms;
 }
+
+
 
 @keyframes zoom-in-out {
   0% { transform: scale(1); }

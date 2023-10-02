@@ -60,6 +60,13 @@ UserConfig.getUserConfigLocation('raidboss', defaultOptions, () => {
     if (!previous && options.AlertsEnabled)
       console.log('Enabling alerts via query parameter');
   }
+  const imagesParam = params.get('images');
+  if (imagesParam !== null) {
+    const previous = options.ImagesEnabled;
+    options.ImagesEnabled = !!parseInt(imagesParam);
+    if (!previous && options.ImagesEnabled)
+      console.log('Enabling images via query parameter');
+  }
   const timelineParam = params.get('timeline');
   if (timelineParam !== null) {
     const previous = options.TimelineEnabled;
@@ -80,6 +87,8 @@ UserConfig.getUserConfigLocation('raidboss', defaultOptions, () => {
     throw new Error('Unable to find container element');
   if (!options.AlertsEnabled)
     container.classList.add('hide-alerts');
+  if (!options.ImagesEnabled)
+    container.classList.add('hide-images');
   if (!options.TimelineEnabled)
     container.classList.add('hide-timeline');
 

@@ -216,6 +216,9 @@
   <data name="PresetRaidbossCombined" xml:space="preserve">
     <value>Raidboss (Combined Alerts &amp; Timeline)</value>
   </data>
+  <data name="PresetRaidbossImageOnly" xml:space="preserve">
+    <value>Raidboss Images Only</value>
+  </data>
   <data name="PresetRaidbossTimelineOnly" xml:space="preserve">
     <value>Raidboss Timeline Only</value>
   </data>

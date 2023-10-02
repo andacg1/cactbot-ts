@@ -656,6 +656,7 @@ namespace Cactbot {
       RegisterPreset("Raidboss", width:1100, height:300, Strings.PresetRaidbossCombined, "raidboss");
       RegisterPreset("Raidboss", width:1100, height:300, Strings.PresetRaidbossAlertOnly, "raidboss_alerts_only");
       RegisterPreset("Raidboss", width:320, height:220, Strings.PresetRaidbossTimelineOnly, "raidboss_timeline_only");
+      RegisterPreset("Raidboss", width:300, height:300, Strings.PresetRaidbossImageOnly, "raidboss_images_only");
       RegisterPreset("Jobs", width:600, height:300, Strings.PresetJobs);
       RegisterPreset("Eureka", width:400, height:400, Strings.PresetEureka);
       RegisterPreset("Fisher", width:500, height:500, Strings.PresetFisher);

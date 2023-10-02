@@ -279,6 +279,11 @@ export class HTMLTimelineUI extends TimelineUI {
       this.popupText.Alarm(text, currentTime);
   }
 
+  public override OnShowImageText(text: string, currentTime: number): void {
+    if (this.popupText)
+      this.popupText.Image(text, currentTime);
+  }
+
   public override OnSpeakTTS(text: string, currentTime: number): void {
     if (this.popupText)
       this.popupText.TTS(text, currentTime);

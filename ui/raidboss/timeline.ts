@@ -103,6 +103,10 @@ export class TimelineUI {
     /* noop */
   }
 
+  public OnShowImageText(_text: string, _currentTime: number): void {
+    /* noop */
+  }
+
   public OnSpeakTTS(_text: string, _currentTime: number): void {
     /* noop */
   }
@@ -459,6 +463,8 @@ export class Timeline {
         this.ui?.OnShowAlertText(t.text, currentTime);
       else if (t.type === 'alarm')
         this.ui?.OnShowAlarmText(t.text, currentTime);
+      else if (t.type === 'image')
+        this.ui?.OnShowImageText(t.text, currentTime);
       else if (t.type === 'tts')
         this.ui?.OnSpeakTTS(t.text, currentTime);
       else if (t.type === 'trigger')

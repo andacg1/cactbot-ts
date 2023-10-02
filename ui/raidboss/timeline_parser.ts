@@ -54,7 +54,7 @@ export type Sync = {
 };
 
 type ParsedPopupText = {
-  type: 'info' | 'alert' | 'alarm' | 'tts';
+  type: 'info' | 'alert' | 'alarm' | 'image' | 'tts';
   secondsBefore?: number;
   text: string;
 };
